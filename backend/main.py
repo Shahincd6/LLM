@@ -1,5 +1,5 @@
 # backend/main.py
-
+from fastapi.responses import RedirectResponse
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from groq_client import query_groq
@@ -14,6 +14,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the LLM API. Use /chat endpoint for chat functionality."}
+
 @app.post("/chat")
 async def chat(request: Request):
     body = await request.json()
@@ -26,3 +30,8 @@ async def chat(request: Request):
         return {"response": response}
     except Exception as e:
         return {"response": f"Error: {str(e)}"}
+
+
+@app.get("/docs", include_in_schema=False)
+async def custom_swagger_ui_redirect():
+    return RedirectResponse(url="/docs")
