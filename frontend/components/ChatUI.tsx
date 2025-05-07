@@ -24,10 +24,13 @@ export default function ChatUI() {
     setIsLoading(true);
   
     try {
-      const res = await axios.post('http://localhost:8000/chat', { prompt: input });
+      // Use environment variable for API URL with fallback to localhost for development
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const res = await axios.post(`${apiUrl}/chat`, { prompt: input });
       const botMessage = { role: 'assistant', content: res.data.response };
       setMessages((prev) => [...prev, botMessage]);
-    } catch {
+    } catch (error) {
+      console.error('Error connecting to server:', error);
       setMessages((prev) => [
         ...prev,
         { role: 'assistant', content: 'Error: Could not reach the server.' },

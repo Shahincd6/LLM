@@ -1,4 +1,3 @@
-# backend/main.py
 from fastapi.responses import RedirectResponse
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -6,10 +5,14 @@ from groq_client import query_groq
 
 app = FastAPI()
 
-# Allow frontend dev environment
+# Update with your Vercel domain
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://llm-three-eta.vercel.app",  
+    ],
+    allow_credentials=True,  # Important for cookies/authentication if needed
     allow_methods=["*"],
     allow_headers=["*"],
 )
