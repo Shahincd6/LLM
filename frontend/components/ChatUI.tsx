@@ -17,17 +17,17 @@ export default function ChatUI() {
 
   const sendMessage = async () => {
     if (!input.trim()) return;
-
+  
     const userMessage = { role: 'user', content: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
-
+  
     try {
       const res = await axios.post('http://localhost:8000/chat', { prompt: input });
       const botMessage = { role: 'assistant', content: res.data.response };
       setMessages((prev) => [...prev, botMessage]);
-    } catch (err) {
+    } catch {
       setMessages((prev) => [
         ...prev,
         { role: 'assistant', content: 'Error: Could not reach the server.' },
@@ -35,7 +35,7 @@ export default function ChatUI() {
     } finally {
       setIsLoading(false);
     }
-  };
+  };  
 
   return (
     <div className="flex flex-col h-[80vh] bg-white rounded-lg shadow-lg">
