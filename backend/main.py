@@ -10,7 +10,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://llm-three-eta.vercel.app",  
+        "https://llm-three-eta.vercel.app",
+        "https://llm-5wcmjtblr-shahins-projects-28dc33b3.vercel.app",# Your Vercel domain
     ],
     allow_credentials=True,  # Important for cookies/authentication if needed
     allow_methods=["*"],
